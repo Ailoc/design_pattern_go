@@ -9,4 +9,38 @@
 ### 行为型模式
 
 ### Options模式我得记一下
-   Options模式在Go语言中可以很方便的实现新配置覆盖默认配置，很方便很实用
+   Options模式在Go语言中可以很方便的实现新配置覆盖默认配置，很方便很实用.
+   
+```go
+type Server struct {
+   Addr string
+   Port int
+}
+
+type Option func(*Server)
+
+func WithAddr(addr string) Option {
+   return func(s *Server) {
+      s.Addr = addr
+   }
+}
+func WithPort(port string) Option {
+   return func(s *Server) {
+      s.Port = port
+   }
+}
+
+func NewServer(opts ...Options) *Server {
+   s := &Server {
+      s.Addr: "127.0.0.1",
+      s.Port: 8888,
+   }
+   for _, opt := range opt {
+      opt(s)
+   }
+
+   return s
+}
+
+// s := NewServer(WithPort("6666"))
+```
